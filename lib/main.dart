@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:simple_employee_management/employee_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_employee_management/ui/screens/employee_list.dart';
+import 'bloc/employee_list_bloc.dart';
+import 'helpers/db_helper.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final databaseHelper = DatabaseHelper();
+  databaseHelper.initDatabase().then((value) {
+    runApp(MultiBlocProvider(providers: [
+      BlocProvider<EmployeeListBloc>(
+        create: (context) => EmployeeListBloc(databaseHelper)..add(FetchEmployeeListEvent()),
+      )
+    ], child: const MyApp()));
+  }); // Create an instance of db helper class
 }
 
 class MyApp extends StatelessWidget {
@@ -11,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Employee Manager',
       theme: ThemeData(
         primaryColor: Colors.blue,
         appBarTheme: const AppBarTheme(elevation: 0),

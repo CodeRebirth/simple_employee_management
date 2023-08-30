@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:simple_employee_management/add_employee.dart';
-import 'package:simple_employee_management/common_appbar.dart';
-
-class EmployeeList extends StatefulWidget {
-  const EmployeeList({
-    super.key,
-  });
-  @override
-  State<EmployeeList> createState() => _EmployeeListState();
-}
 
 const String svg = '''<svg width="262" height="219" viewBox="0 0 262 219" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.1 121.27C5.1 121.27 19.1571 101.37 0 85.9413C0 85.9413 24.6143 92.4556 36.5857 62.3984C36.5857 62.3984 48.0857 77.8841 63.3714 64.9127C63.3714 64.9127 64.6 80.1984 85.6143 80.5127C85.6143 80.5127 76.2 100.284 101.671 111.013C101.671 111.013 78.9714 114.798 81.9857 142.356C81.9857 142.356 55.9714 131.541 40.5286 152.156C40.5286 152.156 34.2714 140.498 18.9143 142.813C18.9 142.813 21.4286 126.913 5.1 121.27Z" fill="#E9E9E9"/>
@@ -150,32 +140,23 @@ const String svg = '''<svg width="262" height="219" viewBox="0 0 262 219" fill="
 <path d="M70.6576 85.6509L66.9862 81.9795C66.7719 81.7652 66.4862 81.6652 66.2147 81.6795L63.529 78.9938C65.5576 76.4938 65.4004 72.7938 63.0719 70.4652C61.8719 69.2652 60.2576 68.5938 58.5576 68.5938C56.8576 68.5938 55.2433 69.2509 54.0433 70.4652C52.8433 71.6652 52.1719 73.2795 52.1719 74.9795C52.1719 76.6795 52.829 78.2938 54.0433 79.4938C55.2433 80.6938 56.8576 81.3652 58.5576 81.3652C60.029 81.3652 61.429 80.8652 62.5719 79.9509L65.2576 82.6366C65.2433 82.908 65.3433 83.1938 65.5576 83.408L69.229 87.0795C69.429 87.2795 69.6862 87.3795 69.9433 87.3795C70.2004 87.3795 70.4576 87.2795 70.6576 87.0795C71.0433 86.6938 71.0433 86.0509 70.6576 85.6509ZM55.0147 78.5652C54.0576 77.608 53.5433 76.3509 53.5433 75.008C53.5433 73.6652 54.0719 72.3937 55.0147 71.4509C55.9719 70.4937 57.229 69.9795 58.5719 69.9795C59.9147 69.9795 61.1862 70.508 62.129 71.4509C64.0862 73.408 64.0862 76.608 62.129 78.5652C61.1719 79.5223 59.9147 80.0366 58.5719 80.0366C57.229 80.0366 55.9576 79.508 55.0147 78.5652Z" fill="#1F4068"/>
 </svg>''';
 
-class _EmployeeListState extends State<EmployeeList> {
+class NoEmployeeFound extends StatelessWidget {
+  const NoEmployeeFound({
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CommonAppBar(title: "Employee List"),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SvgPicture.string(
-              svg,
-              width: 200,
-              height: 200,
-            ),
-            const Text("No Employee records found")
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        SvgPicture.string(
+          svg,
+          width: 200,
+          height: 200,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const AddEmployeeDetails(),
-        )),
-        tooltip: 'Add Employee',
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: const Icon(Icons.add),
-      ),
+        const Text("No Employee records found")
+      ],
     );
   }
 }
