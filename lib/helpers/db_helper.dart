@@ -43,9 +43,10 @@ class DatabaseHelper {
   Future<void> moveEmployeeToDeletedTable(int id) async {
     final db = await database;
     final employee = await db.query('employees', where: 'id = ?', whereArgs: [id]);
-
+    print(employee);
     if (employee.isNotEmpty) {
       final employeeData = Map<String, dynamic>.from(employee.first);
+      print(employeeData);
       int originalId = employeeData["id"];
       employeeData.remove('id');
       await db.insert('deleted_employees', employeeData);
@@ -89,5 +90,15 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<void> clearAllData() async {
+    final db = await database;
+
+    // Delete all records from the 'employees' table
+    await db.delete('employees');
+
+    // Delete all records from the 'deleted_employees' table
+    await db.delete('deleted_employees');
   }
 }

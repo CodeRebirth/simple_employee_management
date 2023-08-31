@@ -32,6 +32,9 @@ class _EmployeeListState extends State<EmployeeList> {
       floatingActionButton: const AddFloatingActionButton(),
       body: Center(
         child: BlocConsumer<EmployeeListBloc, EmployeeListState>(listener: (context, state) {
+          // if (state.employees.isEmpty && state.prevEmployees.isEmpty) {
+          //   BlocProvider.of<EmployeeListBloc>(context).add((ClearAllData()));
+          // }
           if (state.modifyEmployeeList == true) {
             BlocProvider.of<EmployeeListBloc>(context).add(FetchEmployeeListEvent());
 
@@ -57,7 +60,7 @@ class _EmployeeListState extends State<EmployeeList> {
           if (state.loadingState) {
             return const CircularProgressIndicator.adaptive();
           } else {
-            if (state.employees.isEmpty) {
+            if (state.employees.isEmpty && state.prevEmployees.isEmpty) {
               return const NoEmployeeFound();
             } else {
               return Column(

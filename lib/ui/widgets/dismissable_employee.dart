@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_employee_management/bloc/employee_list_bloc.dart';
@@ -33,7 +35,7 @@ class DismissableEmployeeTile extends StatelessWidget {
       onDismissed: (direction) {
         BlocProvider.of<EmployeeListBloc>(context, listen: false).add(DeleteEmployeeEvent(id: employee.id!.toInt(), name: employee.empName));
       },
-      key: Key(employees[index].id.toString()),
+      key: Key(employees[index].id.toString() + Random().nextDouble().toString()),
       child: InkWell(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => AddOrEditEmployeeDetails(

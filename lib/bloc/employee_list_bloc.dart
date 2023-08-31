@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -118,6 +117,8 @@ class UndoDeleteEvent extends EmployeeListEvent {
   UndoDeleteEvent({required this.name});
 }
 
+class ClearAllData extends EmployeeListEvent {}
+
 class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
   final DatabaseHelper databaseHelper;
   EmployeeListBloc(this.databaseHelper) : super(const EmployeeListState(loadingState: true, modifyEmployeeList: false, employees: [], prevEmployees: [])) {
@@ -164,6 +165,9 @@ class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
       emit(state.copyWith(modifyEmployeeList: false));
       await databaseHelper.updateEmployee(event.updatedData.toMap(), event.id);
       emit(state.copyWith(modifyEmployeeList: true, actionString: "Update Employee data"));
+    });
+    on<ClearAllData>((event, emit) async {
+      databaseHelper.clearAllData();
     });
   }
 }
