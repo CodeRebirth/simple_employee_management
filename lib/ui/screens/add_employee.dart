@@ -70,123 +70,124 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                   child: Center(
                     child: Column(
                       children: [
-                        Expanded(
-                          child: Container(
-                              padding: const EdgeInsets.all(10.0),
-                              alignment: Alignment.center,
-                              child: Wrap(
-                                runSpacing: 10,
-                                spacing: 10,
-                                children: [
-                                  if (whichDate == "endDate")
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          selectedTile = "No Date";
-                                          selectedDay = null;
-                                        });
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(2),
-                                          color: selectedTile == "No Date" ? Colors.blue : Colors.blue.shade50,
-                                        ),
-                                        height: 35,
-                                        width: 160,
-                                        child: Text("No Date", style: selectedTile == "No Date" ? const TextStyle(color: Colors.white) : color),
-                                      ),
-                                    ),
+                        Container(
+                            padding: const EdgeInsets.all(10.0),
+                            alignment: Alignment.center,
+                            child: Wrap(
+                              runSpacing: 10,
+                              spacing: 10,
+                              children: [
+                                if (whichDate == "endDate")
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        selectedDay = DateTime.now();
-                                        selectedTile = "Today";
+                                        selectedTile = "No Date";
+                                        selectedDay = null;
                                       });
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
-                                        color: selectedTile == "Today" ? Colors.blue : Colors.blue.shade50,
+                                        color: selectedTile == "No Date" ? Colors.blue : Colors.blue.shade50,
                                       ),
                                       height: 35,
                                       width: 160,
-                                      child: Text("Today", style: selectedTile == "Today" ? const TextStyle(color: Colors.white) : color),
+                                      child: Text("No Date", style: selectedTile == "No Date" ? const TextStyle(color: Colors.white) : color),
                                     ),
                                   ),
-                                  if (whichDate != "endDate")
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          DateTime now = selectedDay ?? DateTime.now();
-                                          int daysUntilNextMonday = DateTime.monday - now.weekday + 7;
-                                          DateTime nextMonday = now.add(Duration(days: daysUntilNextMonday));
-                                          selectedDay = nextMonday;
-                                          selectedTile = "Monday";
-                                        });
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(2),
-                                          color: selectedTile == "Monday" ? Colors.blue : Colors.blue.shade50,
-                                        ),
-                                        height: 35,
-                                        width: 160,
-                                        child: Text("Next Monday", style: selectedTile == "Monday" ? const TextStyle(color: Colors.white) : color),
-                                      ),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedDay = DateTime.now();
+                                      selectedTile = "Today";
+                                    });
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(2),
+                                      color: selectedTile == "Today" ? Colors.blue : Colors.blue.shade50,
                                     ),
-                                  if (whichDate != "endDate")
-                                    InkWell(
-                                      onTap: () {
+                                    height: 35,
+                                    width: 160,
+                                    child: Text("Today", style: selectedTile == "Today" ? const TextStyle(color: Colors.white) : color),
+                                  ),
+                                ),
+                                if (whichDate != "endDate")
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
                                         DateTime now = selectedDay ?? DateTime.now();
-                                        int daysUntilNextTuesday = DateTime.tuesday - now.weekday;
-                                        if (daysUntilNextTuesday <= 0) {
-                                          daysUntilNextTuesday += 7;
-                                        }
-                                        DateTime nextTuesday = now.add(Duration(days: daysUntilNextTuesday));
-
-                                        setState(() {
-                                          selectedDay = nextTuesday;
-                                          selectedTile = "Tuesday";
-                                        });
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(2),
-                                          color: selectedTile == "Tuesday" ? Colors.blue : Colors.blue.shade50,
-                                        ),
-                                        height: 35,
-                                        width: 160,
-                                        child: Text("Next Tuesday", style: selectedTile == "Tuesday" ? const TextStyle(color: Colors.white) : color),
+                                        int daysUntilNextMonday = DateTime.monday - now.weekday + 7;
+                                        DateTime nextMonday = now.add(Duration(days: daysUntilNextMonday));
+                                        selectedDay = nextMonday;
+                                        selectedTile = "Monday";
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(2),
+                                        color: selectedTile == "Monday" ? Colors.blue : Colors.blue.shade50,
                                       ),
+                                      height: 35,
+                                      width: 160,
+                                      child: Text("Next Monday", style: selectedTile == "Monday" ? const TextStyle(color: Colors.white) : color),
                                     ),
-                                  if (whichDate != "endDate")
-                                    InkWell(
-                                      onTap: () {
-                                        DateTime now = selectedDay ?? DateTime.now();
-                                        DateTime nextWeek = now.add(const Duration(days: 7));
+                                  ),
+                                if (whichDate != "endDate")
+                                  InkWell(
+                                    onTap: () {
+                                      DateTime now = selectedDay ?? DateTime.now();
+                                      int daysUntilNextTuesday = DateTime.tuesday - now.weekday;
+                                      if (daysUntilNextTuesday <= 0) {
+                                        daysUntilNextTuesday += 7;
+                                      }
+                                      DateTime nextTuesday = now.add(Duration(days: daysUntilNextTuesday));
 
-                                        setState(() {
-                                          selectedDay = nextWeek;
-                                          selectedTile = "One Week";
-                                        });
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(2),
-                                          color: selectedTile == "One Week" ? Colors.blue : Colors.blue.shade50,
-                                        ),
-                                        height: 35,
-                                        width: 160,
-                                        child: Text("Next Week", style: selectedTile == "One Week" ? const TextStyle(color: Colors.white) : color),
+                                      setState(() {
+                                        selectedDay = nextTuesday;
+                                        selectedTile = "Tuesday";
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(2),
+                                        color: selectedTile == "Tuesday" ? Colors.blue : Colors.blue.shade50,
                                       ),
-                                    )
-                                ],
-                              )),
+                                      height: 35,
+                                      width: 160,
+                                      child: Text("Next Tuesday", style: selectedTile == "Tuesday" ? const TextStyle(color: Colors.white) : color),
+                                    ),
+                                  ),
+                                if (whichDate != "endDate")
+                                  InkWell(
+                                    onTap: () {
+                                      DateTime now = selectedDay ?? DateTime.now();
+                                      DateTime nextWeek = now.add(const Duration(days: 7));
+
+                                      setState(() {
+                                        selectedDay = nextWeek;
+                                        selectedTile = "One Week";
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(2),
+                                        color: selectedTile == "One Week" ? Colors.blue : Colors.blue.shade50,
+                                      ),
+                                      height: 35,
+                                      width: 160,
+                                      child: Text("Next Week", style: selectedTile == "One Week" ? const TextStyle(color: Colors.white) : color),
+                                    ),
+                                  )
+                              ],
+                            )),
+                        Container(
+                          height: 10,
                         ),
                         TableCalendar(
                           calendarStyle: CalendarStyle(
@@ -283,7 +284,9 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                           style: ElevatedButton.styleFrom(elevation: 0),
                                           onPressed: () {
                                             if (whichDate == "joinDate") {
-                                              joiningDateController.text = DateFormat('dd MMM yyyy').format(selectedDay!);
+                                              if (selectedDay != null) {
+                                                joiningDateController.text = DateFormat('dd MMM yyyy').format(selectedDay!);
+                                              }
                                               Navigator.of(context).pop();
                                             } else {
                                               if (selectedDay != null) {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 import 'package:simple_employee_management/model/employee_model.dart';
 
@@ -128,18 +129,11 @@ class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
         for (Map<String, dynamic> e in data) {
           final employee = EmployeeModel(id: e["id"], empName: e["empName"], role: e["role"], ending_date: e["ending_date"], joining_date: e["joining_date"]);
 
-          if (employee.ending_date == "") {
+          if (employee.ending_date == "" || DateFormat('dd MMM yyyy').parse(employee.ending_date).isAfter(DateTime.now())) {
             employeeData.add(employee);
           } else {
             prevEmployeeData.add(employee);
           }
-
-          // final DateTime dateTime = DateFormat('dd MMM yyyy').parse(employee.ending_date);
-
-          // if (dateTime.isBefore(DateTime.now())) {
-          // } else {
-          //   employeeData.add(employee);
-          // }
         }
 
         emit(state.copyWith(employees: employeeData, loadingState: false, prevEmployees: prevEmployeeData, modifyEmployeeList: false));
