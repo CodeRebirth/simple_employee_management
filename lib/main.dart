@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_employee_management/ui/screens/employee_list.dart';
 import 'bloc/employee_list_bloc.dart';
@@ -8,6 +9,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final databaseHelper = DatabaseHelper();
   databaseHelper.initDatabase().then((value) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     runApp(MultiBlocProvider(providers: [
       BlocProvider<EmployeeListBloc>(
         create: (context) => EmployeeListBloc(databaseHelper)..add(FetchEmployeeListEvent()),
@@ -24,6 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Employee Manager',
       theme: ThemeData(
+        fontFamily: 'Roboto',
         primaryColor: Colors.blue,
         appBarTheme: const AppBarTheme(elevation: 0),
         scaffoldBackgroundColor: Colors.white,

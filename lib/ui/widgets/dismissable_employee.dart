@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:simple_employee_management/bloc/employee_list_bloc.dart';
 import 'package:simple_employee_management/model/employee_model.dart';
 import 'package:simple_employee_management/ui/screens/add_employee.dart';
@@ -15,12 +16,14 @@ class DismissableEmployeeTile extends StatelessWidget {
     required this.employees,
     required this.employee,
     required this.index,
+    required this.prevEmployeeList,
   }) : super(key: key);
 
   final DatabaseHelper dbHelper;
   final List<EmployeeModel> employees;
   final EmployeeModel employee;
   final int index;
+  final bool prevEmployeeList;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,9 @@ class DismissableEmployeeTile extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Text("From ${employee.joining_date}", style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 10)),
+              prevEmployeeList == true
+                  ? Text("From ${employee.joining_date} to ${employee.ending_date}", style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 10))
+                  : Text("From ${employee.joining_date} ", style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 10)),
             ],
           ),
         ),

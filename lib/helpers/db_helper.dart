@@ -41,16 +41,19 @@ class DatabaseHelper {
   }
 
   Future<void> moveEmployeeToDeletedTable(int id) async {
-    final db = await database;
-    final employee = await db.query('employees', where: 'id = ?', whereArgs: [id]);
-    print(employee);
-    if (employee.isNotEmpty) {
-      final employeeData = Map<String, dynamic>.from(employee.first);
-      print(employeeData);
-      int originalId = employeeData["id"];
-      employeeData.remove('id');
-      await db.insert('deleted_employees', employeeData);
-      await db.delete('employees', where: 'id = ?', whereArgs: [originalId]);
+    try {
+      final db = await database;
+      final employee = await db.query('employees', where: 'id = ?', whereArgs: [id]);
+
+      if (employee.isNotEmpty) {
+        final employeeData = Map<String, dynamic>.from(employee.first);
+        int originalId = employeeData["id"];
+        employeeData.remove('id');
+        await db.insert('deleted_employees', employeeData);
+        await db.delete('employees', where: 'id = ?', whereArgs: [originalId]);
+      }
+    } catch (err) {
+      rethrow;
     }
   }
 
@@ -60,45 +63,61 @@ class DatabaseHelper {
   }
 
   Future<void> undoDelete(String name) async {
-    final db = await database;
-    final deletedEmployee = await db.query('deleted_employees', where: 'empName = ?', whereArgs: [name]);
-    if (deletedEmployee.isNotEmpty) {
-      final employeeData = Map<String, dynamic>.from(deletedEmployee.first);
-      employeeData.remove('id');
-      await db.insert('employees', employeeData);
-      await db.delete('deleted_employees', where: 'empName = ?', whereArgs: [name]);
+    try {
+      final db = await database;
+      final deletedEmployee = await db.query('deleted_employees', where: 'empName = ?', whereArgs: [name]);
+      if (deletedEmployee.isNotEmpty) {
+        final employeeData = Map<String, dynamic>.from(deletedEmployee.first);
+        employeeData.remove('id');
+        await db.insert('employees', employeeData);
+        await db.delete('deleted_employees', where: 'empName = ?', whereArgs: [name]);
+      }
+    } catch (err) {
+      rethrow;
     }
   }
 
   Future<List<Map<String, dynamic>>> getAllEmployees() async {
-    final db = await database;
-    return await db.query('employees');
+    try {
+      final db = await database;
+      return await db.query('employees');
+    } catch (err) {
+      rethrow;
+    }
   }
 
   Future<int> deleteEmployee(int id) async {
-    final db = await database;
-    return await db.delete('employees', where: 'id = ?', whereArgs: [id]);
+    try {
+      final db = await database;
+      return await db.delete('employees', where: 'id = ?', whereArgs: [id]);
+    } catch (err) {
+      rethrow;
+    }
   }
 
   Future<int> updateEmployee(Map<String, dynamic> employee, int empId) async {
-    final db = await database;
-    final id = empId;
+    try {
+      final db = await database;
+      final id = empId;
 
-    return await db.update(
-      'employees',
-      employee,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+      return await db.update(
+        'employees',
+        employee,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (err) {
+      rethrow;
+    }
   }
 
-  Future<void> clearAllData() async {
-    final db = await database;
+  // Future<void> clearAllData() async {
+  //   final db = await database;
 
-    // Delete all records from the 'employees' table
-    await db.delete('employees');
+  //   // Delete all records from the 'employees' table
+  //   await db.delete('employees');
 
-    // Delete all records from the 'deleted_employees' table
-    await db.delete('deleted_employees');
-  }
+  //   // Delete all records from the 'deleted_employees' table
+  //   await db.delete('deleted_employees');
+  // }
 }

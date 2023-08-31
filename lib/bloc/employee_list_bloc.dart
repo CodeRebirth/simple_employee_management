@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 
 import 'package:simple_employee_management/model/employee_model.dart';
 
@@ -130,20 +128,23 @@ class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
         for (Map<String, dynamic> e in data) {
           final employee = EmployeeModel(id: e["id"], empName: e["empName"], role: e["role"], ending_date: e["ending_date"], joining_date: e["joining_date"]);
 
-          final DateTime dateTime = DateFormat('dd MMM yyyy').parse(employee.ending_date);
-
-          if (dateTime.isBefore(DateTime.now())) {
-            prevEmployeeData.add(employee);
-          } else {
+          if (employee.ending_date == "") {
             employeeData.add(employee);
+          } else {
+            prevEmployeeData.add(employee);
           }
+
+          // final DateTime dateTime = DateFormat('dd MMM yyyy').parse(employee.ending_date);
+
+          // if (dateTime.isBefore(DateTime.now())) {
+          // } else {
+          //   employeeData.add(employee);
+          // }
         }
+
         emit(state.copyWith(employees: employeeData, loadingState: false, prevEmployees: prevEmployeeData, modifyEmployeeList: false));
       } else {
-        if (kDebugMode) {
-          print(data);
-        }
-        emit(state.copyWith(employees: [], loadingState: false, modifyEmployeeList: false));
+        emit(state.copyWith(employees: [], loadingState: false, prevEmployees: [], modifyEmployeeList: false));
       }
     });
     on<AddEmployeeEvent>((event, emit) async {
@@ -154,7 +155,7 @@ class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
     on<DeleteEmployeeEvent>((event, emit) async {
       emit(state.copyWith(modifyEmployeeList: false));
       await databaseHelper.moveEmployeeToDeletedTable(event.id);
-      emit(state.copyWith(modifyEmployeeList: true, actionString: "Employee record deleted from list", lastDeleteEmployeeName: event.name));
+      emit(state.copyWith(modifyEmployeeList: true, actionString: "Employee data deleted from list", lastDeleteEmployeeName: event.name));
     });
     on<UndoDeleteEvent>((event, emit) async {
       emit(state.copyWith(modifyEmployeeList: false));
@@ -166,8 +167,8 @@ class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
       await databaseHelper.updateEmployee(event.updatedData.toMap(), event.id);
       emit(state.copyWith(modifyEmployeeList: true, actionString: "Update Employee data"));
     });
-    on<ClearAllData>((event, emit) async {
-      databaseHelper.clearAllData();
-    });
+    // on<ClearAllData>((event, emit) async {
+    //   databaseHelper.clearAllData();
+    // });
   }
 }

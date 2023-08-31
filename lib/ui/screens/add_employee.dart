@@ -64,105 +64,130 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
           child: StatefulBuilder(
             builder: (context, setState) {
               return SizedBox(
-                height: MediaQuery.of(context).size.height * .60,
+                height: MediaQuery.of(context).size.height <= 700 ? MediaQuery.of(context).size.height * .84 : MediaQuery.of(context).size.height * .60,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Center(
                     child: Column(
                       children: [
-                        Container(
-                            padding: const EdgeInsets.all(10.0),
-                            alignment: Alignment.center,
-                            child: Wrap(
-                              runSpacing: 10,
-                              spacing: 10,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedDay = DateTime.now();
-                                      selectedTile = "Today";
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: selectedTile == "Today" ? Colors.blue : Colors.blue.shade50,
+                        Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              alignment: Alignment.center,
+                              child: Wrap(
+                                runSpacing: 10,
+                                spacing: 10,
+                                children: [
+                                  if (whichDate == "endDate")
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedTile = "No Date";
+                                          selectedDay = null;
+                                        });
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(2),
+                                          color: selectedTile == "No Date" ? Colors.blue : Colors.blue.shade50,
+                                        ),
+                                        height: 35,
+                                        width: 160,
+                                        child: Text("No Date", style: selectedTile == "No Date" ? const TextStyle(color: Colors.white) : color),
+                                      ),
                                     ),
-                                    height: 35,
-                                    width: 160,
-                                    child: Text("Today", style: selectedTile == "Today" ? const TextStyle(color: Colors.white) : color),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      DateTime now = selectedDay ?? DateTime.now();
-                                      int daysUntilNextMonday = DateTime.monday - now.weekday + 7;
-                                      DateTime nextMonday = now.add(Duration(days: daysUntilNextMonday));
-                                      selectedDay = nextMonday;
-                                      selectedTile = "Monday";
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: selectedTile == "Monday" ? Colors.blue : Colors.blue.shade50,
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedDay = DateTime.now();
+                                        selectedTile = "Today";
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(2),
+                                        color: selectedTile == "Today" ? Colors.blue : Colors.blue.shade50,
+                                      ),
+                                      height: 35,
+                                      width: 160,
+                                      child: Text("Today", style: selectedTile == "Today" ? const TextStyle(color: Colors.white) : color),
                                     ),
-                                    height: 35,
-                                    width: 160,
-                                    child: Text("Next Monday", style: selectedTile == "Monday" ? const TextStyle(color: Colors.white) : color),
                                   ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    DateTime now = selectedDay ?? DateTime.now();
-                                    int daysUntilNextTuesday = DateTime.tuesday - now.weekday;
-                                    if (daysUntilNextTuesday <= 0) {
-                                      daysUntilNextTuesday += 7;
-                                    }
-                                    DateTime nextTuesday = now.add(Duration(days: daysUntilNextTuesday));
+                                  if (whichDate != "endDate")
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          DateTime now = selectedDay ?? DateTime.now();
+                                          int daysUntilNextMonday = DateTime.monday - now.weekday + 7;
+                                          DateTime nextMonday = now.add(Duration(days: daysUntilNextMonday));
+                                          selectedDay = nextMonday;
+                                          selectedTile = "Monday";
+                                        });
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(2),
+                                          color: selectedTile == "Monday" ? Colors.blue : Colors.blue.shade50,
+                                        ),
+                                        height: 35,
+                                        width: 160,
+                                        child: Text("Next Monday", style: selectedTile == "Monday" ? const TextStyle(color: Colors.white) : color),
+                                      ),
+                                    ),
+                                  if (whichDate != "endDate")
+                                    InkWell(
+                                      onTap: () {
+                                        DateTime now = selectedDay ?? DateTime.now();
+                                        int daysUntilNextTuesday = DateTime.tuesday - now.weekday;
+                                        if (daysUntilNextTuesday <= 0) {
+                                          daysUntilNextTuesday += 7;
+                                        }
+                                        DateTime nextTuesday = now.add(Duration(days: daysUntilNextTuesday));
 
-                                    setState(() {
-                                      selectedDay = nextTuesday;
-                                      selectedTile = "Tuesday";
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: selectedTile == "Tuesday" ? Colors.blue : Colors.blue.shade50,
+                                        setState(() {
+                                          selectedDay = nextTuesday;
+                                          selectedTile = "Tuesday";
+                                        });
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(2),
+                                          color: selectedTile == "Tuesday" ? Colors.blue : Colors.blue.shade50,
+                                        ),
+                                        height: 35,
+                                        width: 160,
+                                        child: Text("Next Tuesday", style: selectedTile == "Tuesday" ? const TextStyle(color: Colors.white) : color),
+                                      ),
                                     ),
-                                    height: 35,
-                                    width: 160,
-                                    child: Text("Next Tuesday", style: selectedTile == "Tuesday" ? const TextStyle(color: Colors.white) : color),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    DateTime now = selectedDay ?? DateTime.now();
-                                    DateTime nextWeek = now.add(const Duration(days: 7));
+                                  if (whichDate != "endDate")
+                                    InkWell(
+                                      onTap: () {
+                                        DateTime now = selectedDay ?? DateTime.now();
+                                        DateTime nextWeek = now.add(const Duration(days: 7));
 
-                                    setState(() {
-                                      selectedDay = nextWeek;
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: selectedTile == "One Week" ? Colors.blue : Colors.blue.shade50,
-                                    ),
-                                    height: 35,
-                                    width: 160,
-                                    child: Text("Next Week", style: selectedTile == "One Week" ? const TextStyle(color: Colors.white) : color),
-                                  ),
-                                )
-                              ],
-                            )),
+                                        setState(() {
+                                          selectedDay = nextWeek;
+                                          selectedTile = "One Week";
+                                        });
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(2),
+                                          color: selectedTile == "One Week" ? Colors.blue : Colors.blue.shade50,
+                                        ),
+                                        height: 35,
+                                        width: 160,
+                                        child: Text("Next Week", style: selectedTile == "One Week" ? const TextStyle(color: Colors.white) : color),
+                                      ),
+                                    )
+                                ],
+                              )),
+                        ),
                         TableCalendar(
                           calendarStyle: CalendarStyle(
                             todayDecoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white, border: Border.all(color: Colors.blue)),
@@ -172,12 +197,25 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                               fontSize: 13,
                               color: Colors.blue,
                             ),
+                            weekendTextStyle: const TextStyle(color: Colors.black87, fontSize: 13),
                             selectedDecoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.blue,
                             ),
+                            disabledTextStyle: TextStyle(color: Colors.grey.shade200, fontSize: 13),
                             outsideDaysVisible: false,
                           ),
+                          enabledDayPredicate: (day) {
+                            if (whichDate == "endDate") {
+                              if (joiningDateController.text != "Today") {
+                                if (day.isBefore(DateFormat('dd MMM yyyy').parse(joiningDateController.text))) {
+                                  return false;
+                                }
+                              }
+                            }
+
+                            return true;
+                          },
                           selectedDayPredicate: (day) {
                             return isSameDay(selectedDay, day);
                           },
@@ -186,10 +224,24 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                           lastDay: DateTime.utc(2030, 12, 31),
                           focusedDay: selectedDay ?? DateTime.now(),
                           headerVisible: true,
-                          headerStyle: const HeaderStyle(titleCentered: true, formatButtonVisible: false, formatButtonShowsNext: false),
+                          headerStyle: const HeaderStyle(
+                              formatButtonVisible: false,
+                              rightChevronIcon: Icon(
+                                Icons.arrow_right,
+                                color: Colors.grey,
+                              ),
+                              leftChevronIcon: Icon(
+                                Icons.arrow_left,
+                                color: Colors.grey,
+                              ),
+                              titleCentered: true,
+                              rightChevronMargin: EdgeInsets.zero,
+                              leftChevronMargin: EdgeInsets.zero,
+                              formatButtonShowsNext: false),
                           calendarFormat: CalendarFormat.month,
                           onDaySelected: (selectedDayCl, focusedDay) {
                             setState(() {
+                              selectedTile = "Empty";
                               selectedDay = selectedDayCl;
                             });
                           },
@@ -208,7 +260,11 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                     Icons.calendar_month,
                                     color: Theme.of(context).primaryColor,
                                   ),
-                                  selectedDay == null ? Text(DateFormat('dd MMM yyyy').format(DateTime.now())) : Text(DateFormat('dd MMM yyyy').format(selectedDay!)),
+                                  selectedDay == null && whichDate == "endDate"
+                                      ? const Text("No Date")
+                                      : selectedDay == null
+                                          ? Text(DateFormat('dd MMM yyyy').format(DateTime.now()))
+                                          : Text(DateFormat('dd MMM yyyy').format(selectedDay!)),
                                   const Spacer(),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -230,7 +286,12 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                               joiningDateController.text = DateFormat('dd MMM yyyy').format(selectedDay!);
                                               Navigator.of(context).pop();
                                             } else {
-                                              endingDateController.text = DateFormat('dd MMM yyyy').format(selectedDay!);
+                                              if (selectedDay != null) {
+                                                endingDateController.text = DateFormat('dd MMM yyyy').format(selectedDay!);
+                                              } else {
+                                                endingDateController.text = "No date";
+                                              }
+
                                               Navigator.of(context).pop();
                                             }
                                           },
@@ -280,6 +341,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const CommonAppBar(title: "Add Employee Details"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -313,18 +375,20 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
             ),
             Row(
               children: [
-                InkWell(
-                  onTap: () async {
-                    showAndSetDate(joiningDateController, "joinDate");
-                  },
-                  child: IgnorePointer(
-                    ignoring: true,
-                    child: RoundedIconTextField(
-                      textSize: 11,
-                      hintText: 'Today',
-                      icon: Icons.calendar_month,
-                      width: 151.5,
-                      controller: joiningDateController,
+                Expanded(
+                  child: InkWell(
+                    onTap: () async {
+                      showAndSetDate(joiningDateController, "joinDate");
+                    },
+                    child: IgnorePointer(
+                      ignoring: true,
+                      child: RoundedIconTextField(
+                        textSize: 11,
+                        hintText: 'Today',
+                        icon: Icons.calendar_month,
+                        width: MediaQuery.of(context).size.width * .389,
+                        controller: joiningDateController,
+                      ),
                     ),
                   ),
                 ),
@@ -335,17 +399,19 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                       size: 17,
                       color: Theme.of(context).primaryColor,
                     )),
-                InkWell(
-                  onTap: () {
-                    showAndSetDate(endingDateController, "endDate");
-                  },
-                  child: IgnorePointer(
-                    ignoring: true,
-                    child: RoundedIconTextField(
-                      hintText: 'No date',
-                      icon: Icons.calendar_month,
-                      width: 151.5,
-                      controller: endingDateController,
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      showAndSetDate(endingDateController, "endDate");
+                    },
+                    child: IgnorePointer(
+                      ignoring: true,
+                      child: RoundedIconTextField(
+                        hintText: 'No date',
+                        icon: Icons.calendar_month,
+                        width: MediaQuery.of(context).size.width * .389,
+                        controller: endingDateController,
+                      ),
                     ),
                   ),
                 ),
@@ -372,21 +438,25 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(elevation: 0),
                     onPressed: () {
-                      EmployeeModel newEmployee = EmployeeModel(
-                          id: widget.existingData == null ? null : widget.existingData!["id"],
-                          empName: empTextController.text,
-                          role: roleController.text,
-                          joining_date: joiningDateController.text,
-                          ending_date: endingDateController.text);
-                      if (widget.existingData != null) {
-                        //updating employee record
-                        if (kDebugMode) {}
-                        BlocProvider.of<EmployeeListBloc>(context, listen: false).add(UpdateEmployeeEvent(updatedData: newEmployee, id: widget.existingData!["id"]));
+                      if (empTextController.text.isEmpty || roleController.text.isEmpty || joiningDateController.text.isEmpty || endingDateController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all the required information")));
+                      } else {
+                        EmployeeModel newEmployee = EmployeeModel(
+                            id: widget.existingData == null ? null : widget.existingData!["id"],
+                            empName: empTextController.text,
+                            role: roleController.text,
+                            joining_date: joiningDateController.text == "Today" ? DateFormat('dd MMM yyyy').format(DateTime.now()) : joiningDateController.text,
+                            ending_date: endingDateController.text == "No date" ? "" : endingDateController.text);
+                        if (widget.existingData != null) {
+                          //updating employee record
+                          if (kDebugMode) {}
+                          BlocProvider.of<EmployeeListBloc>(context, listen: false).add(UpdateEmployeeEvent(updatedData: newEmployee, id: widget.existingData!["id"]));
+                          Navigator.pop(context);
+                          return;
+                        }
+                        BlocProvider.of<EmployeeListBloc>(context, listen: false).add(AddEmployeeEvent(empData: newEmployee));
                         Navigator.pop(context);
-                        return;
                       }
-                      BlocProvider.of<EmployeeListBloc>(context, listen: false).add(AddEmployeeEvent(empData: newEmployee));
-                      Navigator.pop(context);
                     },
                     child: const Text("Save"))
               ],
@@ -428,7 +498,7 @@ class RoundedIconTextField extends StatelessWidget {
         width: width,
         child: TextField(
           controller: controller,
-          style: TextStyle(fontSize: textSize ?? 13),
+          style: const TextStyle(fontSize: 13),
           decoration: InputDecoration(
             hintStyle: const TextStyle(fontSize: 13),
             suffixIcon: suffixIcon != null

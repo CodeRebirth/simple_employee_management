@@ -155,7 +155,10 @@ class NoEmployeeFound extends StatelessWidget {
           width: 200,
           height: 200,
         ),
-        const Text("No Employee records found")
+        const Text(
+          "No Employee records found",
+          style: TextStyle(fontSize: 16),
+        )
       ],
     );
   }

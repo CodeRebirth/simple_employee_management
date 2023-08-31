@@ -28,6 +28,7 @@ class _EmployeeListState extends State<EmployeeList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const CommonAppBar(title: "Employee List"),
       floatingActionButton: const AddFloatingActionButton(),
       body: Center(
@@ -47,7 +48,10 @@ class _EmployeeListState extends State<EmployeeList> {
                 const Spacer(),
                 if (state.actionString!.contains("deleted"))
                   InkWell(
-                    onTap: () => BlocProvider.of<EmployeeListBloc>(context, listen: false).add(UndoDeleteEvent(name: state.lastDeleteEmployeeName!)),
+                    onTap: () {
+                      BlocProvider.of<EmployeeListBloc>(context, listen: false).add(UndoDeleteEvent(name: state.lastDeleteEmployeeName!));
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                    },
                     child: const Text(
                       "Undo",
                       style: TextStyle(color: Colors.blue),
@@ -73,25 +77,32 @@ class _EmployeeListState extends State<EmployeeList> {
                     padding: const EdgeInsets.all(12),
                     child: const Text("Current employees", style: TextStyle(color: Colors.blue)),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return index < state.employees.length
-                            ? Divider(
-                                thickness: 1,
-                                height: 5,
-                                color: Colors.grey.shade100,
-                              )
-                            : Container();
-                      },
-                      padding: const EdgeInsets.only(top: 5),
-                      itemCount: state.employees.length,
-                      itemBuilder: (context, index) {
-                        final employee = state.employees[index];
+                  Expanded(
+                    child: SizedBox(
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return index < state.employees.length
+                              ? Divider(
+                                  thickness: 1,
+                                  height: 5,
+                                  color: Colors.grey.shade100,
+                                )
+                              : Container();
+                        },
+                        padding: const EdgeInsets.only(top: 5),
+                        itemCount: state.employees.length,
+                        itemBuilder: (context, index) {
+                          final employee = state.employees[index];
 
-                        return DismissableEmployeeTile(dbHelper: dbHelper, index: index, employees: state.employees, employee: employee);
-                      },
+                          return DismissableEmployeeTile(
+                            dbHelper: dbHelper,
+                            index: index,
+                            employees: state.employees,
+                            employee: employee,
+                            prevEmployeeList: false,
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Container(
@@ -102,18 +113,24 @@ class _EmployeeListState extends State<EmployeeList> {
                     padding: const EdgeInsets.all(12),
                     child: const Text("Previous employees", style: TextStyle(color: Colors.blue)),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.only(top: 5),
-                      itemCount: state.prevEmployees.length,
-                      itemBuilder: (context, index) {
-                        final employee = state.prevEmployees[index];
-                        return DismissableEmployeeTile(dbHelper: dbHelper, index: index, employees: state.prevEmployees, employee: employee);
-                      },
+                  Expanded(
+                    child: SizedBox(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.only(top: 5),
+                        itemCount: state.prevEmployees.length,
+                        itemBuilder: (context, index) {
+                          final employee = state.prevEmployees[index];
+                          return DismissableEmployeeTile(
+                            dbHelper: dbHelper,
+                            index: index,
+                            employees: state.prevEmployees,
+                            employee: employee,
+                            prevEmployeeList: true,
+                          );
+                        },
+                      ),
                     ),
                   ),
-                  const Spacer(),
                   Container(
                     height: 50,
                     width: MediaQuery.of(context).size.width,
