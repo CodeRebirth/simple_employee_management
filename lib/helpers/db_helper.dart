@@ -110,14 +110,4 @@ class DatabaseHelper {
       rethrow;
     }
   }
-
-  // Future<void> clearAllData() async {
-  //   final db = await database;
-
-  //   // Delete all records from the 'employees' table
-  //   await db.delete('employees');
-
-  //   // Delete all records from the 'deleted_employees' table
-  //   await db.delete('deleted_employees');
-  // }
 }

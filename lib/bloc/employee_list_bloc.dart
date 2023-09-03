@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import 'package:simple_employee_management/model/employee_model.dart';
 
+import '../const/string_const.dart';
 import '../helpers/db_helper.dart';
 
 abstract class EmployeeListEvent {}
@@ -144,22 +145,22 @@ class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
     on<AddEmployeeEvent>((event, emit) async {
       emit(state.copyWith(modifyEmployeeList: false));
       await databaseHelper.insertEmployee(event.empData.toMap());
-      emit(state.copyWith(modifyEmployeeList: true, actionString: "Employee added to list"));
+      emit(state.copyWith(modifyEmployeeList: true, actionString: EMPADD));
     });
     on<DeleteEmployeeEvent>((event, emit) async {
       emit(state.copyWith(modifyEmployeeList: false));
       await databaseHelper.moveEmployeeToDeletedTable(event.id);
-      emit(state.copyWith(modifyEmployeeList: true, actionString: "Employee data deleted from list", lastDeleteEmployeeName: event.name));
+      emit(state.copyWith(modifyEmployeeList: true, actionString: EMPDEL, lastDeleteEmployeeName: event.name));
     });
     on<UndoDeleteEvent>((event, emit) async {
       emit(state.copyWith(modifyEmployeeList: false));
       await databaseHelper.undoDelete(event.name);
-      emit(state.copyWith(modifyEmployeeList: true, actionString: "Undo done"));
+      emit(state.copyWith(modifyEmployeeList: true, actionString: UNDODONE));
     });
     on<UpdateEmployeeEvent>((event, emit) async {
       emit(state.copyWith(modifyEmployeeList: false));
       await databaseHelper.updateEmployee(event.updatedData.toMap(), event.id);
-      emit(state.copyWith(modifyEmployeeList: true, actionString: "Update Employee data"));
+      emit(state.copyWith(modifyEmployeeList: true, actionString: UPDATEMP));
     });
     // on<ClearAllData>((event, emit) async {
     //   databaseHelper.clearAllData();

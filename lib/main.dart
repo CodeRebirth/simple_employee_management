@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_employee_management/const/string_const.dart';
 import 'package:simple_employee_management/ui/screens/employee_list.dart';
 import 'bloc/employee_list_bloc.dart';
 import 'helpers/db_helper.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Employee Manager',
+      title: EMPMANAGER,
       theme: ThemeData(
         fontFamily: 'Roboto',
         primaryColor: Colors.blue,

@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:simple_employee_management/const/string_const.dart';
+import 'package:simple_employee_management/utilities/show_custom_scaffold.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:simple_employee_management/bloc/employee_list_bloc.dart';
@@ -51,7 +53,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
 
   void showAndSetDate(TextEditingController controller, String whichDate) async {
     DateTime? selectedDay;
-    String selectedTile = "empty";
+    String selectedTile = EMPTY;
 
     showDialog(
       context: context,
@@ -77,11 +79,11 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                               runSpacing: 10,
                               spacing: 10,
                               children: [
-                                if (whichDate == "endDate")
+                                if (whichDate == ENDDATE)
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        selectedTile = "No Date";
+                                        selectedTile = NODATE;
                                         selectedDay = null;
                                       });
                                     },
@@ -89,32 +91,32 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
-                                        color: selectedTile == "No Date" ? Colors.blue : Colors.blue.shade50,
+                                        color: selectedTile == NODATE ? Colors.blue : Colors.blue.shade50,
                                       ),
                                       height: 35,
                                       width: 160,
-                                      child: Text("No Date", style: selectedTile == "No Date" ? const TextStyle(color: Colors.white) : color),
+                                      child: Text(NODATE, style: selectedTile == NODATE ? const TextStyle(color: Colors.white) : color),
                                     ),
                                   ),
                                 InkWell(
                                   onTap: () {
                                     setState(() {
                                       selectedDay = DateTime.now();
-                                      selectedTile = "Today";
+                                      selectedTile = TODAY;
                                     });
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(2),
-                                      color: selectedTile == "Today" ? Colors.blue : Colors.blue.shade50,
+                                      color: selectedTile == TODAY ? Colors.blue : Colors.blue.shade50,
                                     ),
                                     height: 35,
                                     width: 160,
-                                    child: Text("Today", style: selectedTile == "Today" ? const TextStyle(color: Colors.white) : color),
+                                    child: Text(TODAY, style: selectedTile == TODAY ? const TextStyle(color: Colors.white) : color),
                                   ),
                                 ),
-                                if (whichDate != "endDate")
+                                if (whichDate != ENDDATE)
                                   InkWell(
                                     onTap: () {
                                       setState(() {
@@ -122,21 +124,21 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                         int daysUntilNextMonday = DateTime.monday - now.weekday + 7;
                                         DateTime nextMonday = now.add(Duration(days: daysUntilNextMonday));
                                         selectedDay = nextMonday;
-                                        selectedTile = "Monday";
+                                        selectedTile = MONDAY;
                                       });
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
-                                        color: selectedTile == "Monday" ? Colors.blue : Colors.blue.shade50,
+                                        color: selectedTile == MONDAY ? Colors.blue : Colors.blue.shade50,
                                       ),
                                       height: 35,
                                       width: 160,
-                                      child: Text("Next Monday", style: selectedTile == "Monday" ? const TextStyle(color: Colors.white) : color),
+                                      child: Text("Next Monday", style: selectedTile == MONDAY ? const TextStyle(color: Colors.white) : color),
                                     ),
                                   ),
-                                if (whichDate != "endDate")
+                                if (whichDate != ENDDATE)
                                   InkWell(
                                     onTap: () {
                                       DateTime now = selectedDay ?? DateTime.now();
@@ -148,21 +150,21 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
 
                                       setState(() {
                                         selectedDay = nextTuesday;
-                                        selectedTile = "Tuesday";
+                                        selectedTile = TUESDAY;
                                       });
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
-                                        color: selectedTile == "Tuesday" ? Colors.blue : Colors.blue.shade50,
+                                        color: selectedTile == TUESDAY ? Colors.blue : Colors.blue.shade50,
                                       ),
                                       height: 35,
                                       width: 160,
-                                      child: Text("Next Tuesday", style: selectedTile == "Tuesday" ? const TextStyle(color: Colors.white) : color),
+                                      child: Text("Next Tuesday", style: selectedTile == TUESDAY ? const TextStyle(color: Colors.white) : color),
                                     ),
                                   ),
-                                if (whichDate != "endDate")
+                                if (whichDate != ENDDATE)
                                   InkWell(
                                     onTap: () {
                                       DateTime now = selectedDay ?? DateTime.now();
@@ -170,18 +172,18 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
 
                                       setState(() {
                                         selectedDay = nextWeek;
-                                        selectedTile = "One Week";
+                                        selectedTile = ONEWEEK;
                                       });
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
-                                        color: selectedTile == "One Week" ? Colors.blue : Colors.blue.shade50,
+                                        color: selectedTile == ONEWEEK ? Colors.blue : Colors.blue.shade50,
                                       ),
                                       height: 35,
                                       width: 160,
-                                      child: Text("Next Week", style: selectedTile == "One Week" ? const TextStyle(color: Colors.white) : color),
+                                      child: Text("Next Week", style: selectedTile == ONEWEEK ? const TextStyle(color: Colors.white) : color),
                                     ),
                                   )
                               ],
@@ -207,9 +209,9 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                             outsideDaysVisible: false,
                           ),
                           enabledDayPredicate: (day) {
-                            if (whichDate == "endDate") {
-                              if (joiningDateController.text != "Today") {
-                                if (day.isBefore(DateFormat('dd MMM yyyy').parse(joiningDateController.text))) {
+                            if (whichDate == ENDDATE) {
+                              if (joiningDateController.text != TODAY) {
+                                if (day.isBefore(DateFormat(DATEFORMAT).parse(joiningDateController.text))) {
                                   return false;
                                 }
                               }
@@ -261,11 +263,11 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                     Icons.calendar_month,
                                     color: Theme.of(context).primaryColor,
                                   ),
-                                  selectedDay == null && whichDate == "endDate"
-                                      ? const Text("No Date")
+                                  selectedDay == null && whichDate == ENDDATE
+                                      ? const Text(NODATE)
                                       : selectedDay == null
-                                          ? Text(DateFormat('dd MMM yyyy').format(DateTime.now()))
-                                          : Text(DateFormat('dd MMM yyyy').format(selectedDay!)),
+                                          ? Text(DateFormat(DATEFORMAT).format(DateTime.now()))
+                                          : Text(DateFormat(DATEFORMAT).format(selectedDay!)),
                                   const Spacer(),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -274,7 +276,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                           style: ElevatedButton.styleFrom(backgroundColor: Colors.blue[50], elevation: 0),
                                           onPressed: () => Navigator.pop(context),
                                           child: const Text(
-                                            "Cancel",
+                                            CANCEL,
                                             style: TextStyle(color: Colors.blue),
                                           )),
                                       const SizedBox(
@@ -283,22 +285,22 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(elevation: 0),
                                           onPressed: () {
-                                            if (whichDate == "joinDate") {
+                                            if (whichDate == JOINDATE) {
                                               if (selectedDay != null) {
-                                                joiningDateController.text = DateFormat('dd MMM yyyy').format(selectedDay!);
+                                                joiningDateController.text = DateFormat(DATEFORMAT).format(selectedDay!);
                                               }
                                               Navigator.of(context).pop();
                                             } else {
                                               if (selectedDay != null) {
-                                                endingDateController.text = DateFormat('dd MMM yyyy').format(selectedDay!);
+                                                endingDateController.text = DateFormat(DATEFORMAT).format(selectedDay!);
                                               } else {
-                                                endingDateController.text = "No date";
+                                                endingDateController.text = NODATE;
                                               }
 
                                               Navigator.of(context).pop();
                                             }
                                           },
-                                          child: const Text("Save"))
+                                          child: const Text(SAVE))
                                     ],
                                   )
                                 ],
@@ -345,7 +347,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const CommonAppBar(title: "Add Employee Details"),
+      appBar: const CommonAppBar(title: ADDEMPDETAILS),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -381,13 +383,13 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                 Expanded(
                   child: InkWell(
                     onTap: () async {
-                      showAndSetDate(joiningDateController, "joinDate");
+                      showAndSetDate(joiningDateController, JOINDATE);
                     },
                     child: IgnorePointer(
                       ignoring: true,
                       child: RoundedIconTextField(
                         textSize: 11,
-                        hintText: 'Today',
+                        hintText: TODAY,
                         icon: Icons.calendar_month,
                         width: MediaQuery.of(context).size.width * .389,
                         controller: joiningDateController,
@@ -405,12 +407,12 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      showAndSetDate(endingDateController, "endDate");
+                      showAndSetDate(endingDateController, ENDDATE);
                     },
                     child: IgnorePointer(
                       ignoring: true,
                       child: RoundedIconTextField(
-                        hintText: 'No date',
+                        hintText: NODATE,
                         icon: Icons.calendar_month,
                         width: MediaQuery.of(context).size.width * .389,
                         controller: endingDateController,
@@ -432,7 +434,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.blue[50], elevation: 0),
                     onPressed: () => Navigator.pop(context),
                     child: const Text(
-                      "Cancel",
+                      CANCEL,
                       style: TextStyle(color: Colors.blue),
                     )),
                 const SizedBox(
@@ -442,14 +444,14 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                     style: ElevatedButton.styleFrom(elevation: 0),
                     onPressed: () {
                       if (empTextController.text.isEmpty || roleController.text.isEmpty || joiningDateController.text.isEmpty || endingDateController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all the required information")));
+                        showCustomScaffold(context, const Text(PLSFILLRQDINFO));
                       } else {
                         EmployeeModel newEmployee = EmployeeModel(
                             id: widget.existingData == null ? null : widget.existingData!["id"],
                             empName: empTextController.text,
                             role: roleController.text,
-                            joining_date: joiningDateController.text == "Today" ? DateFormat('dd MMM yyyy').format(DateTime.now()) : joiningDateController.text,
-                            ending_date: endingDateController.text == "No date" ? "" : endingDateController.text);
+                            joining_date: joiningDateController.text == TODAY ? DateFormat(DATEFORMAT).format(DateTime.now()) : joiningDateController.text,
+                            ending_date: endingDateController.text == NODATE ? "" : endingDateController.text);
                         if (widget.existingData != null) {
                           //updating employee record
                           if (kDebugMode) {}
@@ -461,7 +463,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                         Navigator.pop(context);
                       }
                     },
-                    child: const Text("Save"))
+                    child: const Text(SAVE))
               ],
             )
           ],

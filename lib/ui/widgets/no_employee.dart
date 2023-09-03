@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:simple_employee_management/const/string_const.dart';
 import 'package:simple_employee_management/const/svg_const.dart';
 
 class NoEmployeeFound extends StatelessWidget {
@@ -18,7 +19,7 @@ class NoEmployeeFound extends StatelessWidget {
           height: 200,
         ),
         const Text(
-          "No Employee records found",
+          NOEMPRCD,
           style: TextStyle(fontSize: 16),
         )
       ],
