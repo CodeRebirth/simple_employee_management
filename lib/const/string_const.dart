@@ -2,7 +2,7 @@
 
 const String NOEMPRCD = "No Employee records found";
 const String EMPADD = "Employee added to list";
-const String EMPDEL = "Employee delete from list";
+const String EMPDEL = "Employee deleted from list";
 const String ADDEMPDETAILS = "Add employee details";
 const String UNDODONE = "Undo Done";
 const String UPDATEMP = "Update employee list";

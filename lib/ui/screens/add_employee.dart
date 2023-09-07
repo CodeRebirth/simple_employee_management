@@ -454,7 +454,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                             ending_date: endingDateController.text == NODATE ? " " : endingDateController.text);
                         if (widget.existingData != null) {
                           //updating employee record
-                          if (kDebugMode) {}
+
                           BlocProvider.of<EmployeeListBloc>(context, listen: false).add(UpdateEmployeeEvent(updatedData: newEmployee, id: widget.existingData!["id"]));
                           Navigator.pop(context);
                           return;
