@@ -451,7 +451,7 @@ class _AddEmployeeDetailsState extends State<AddOrEditEmployeeDetails> {
                             empName: empTextController.text,
                             role: roleController.text,
                             joining_date: joiningDateController.text == TODAY ? DateFormat(DATEFORMAT).format(DateTime.now()) : joiningDateController.text,
-                            ending_date: endingDateController.text == NODATE ? "" : endingDateController.text);
+                            ending_date: endingDateController.text == NODATE ? " " : endingDateController.text);
                         if (widget.existingData != null) {
                           //updating employee record
                           if (kDebugMode) {}
